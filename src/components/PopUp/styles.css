@@ -20,9 +20,10 @@
     background: white;  
   }
   .s{
-    border: 1px solid red;
-    height: 600px;
-    width : 100%;
+    text-align: center;
+    line-height: 18px;
+    /* display: inline-block; */
+    margin: 0 auto;
   }
   .popuppics{
     display: inline;
@@ -35,7 +36,7 @@
     height: 742px;
   }
   .gridItem{
-    border: 1px  solid green;
+    /* border: 1px  solid green; */
     max-width: 200px;
     max-height: 200px;
 

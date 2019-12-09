@@ -10,7 +10,7 @@ const PopUp  = (props) => {
           <h1>{text}</h1>
           <button onClick={closePopup}>close me</button>
         </div>
-        <div className="s">{data}</div>
+        <div className="s"><img src={data} alt=""/></div>
       </div>
     );
   }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "./styles.css";
+import pic from "./searchIcon.png"
 
 const SearchBar = ({ onChange, handleEnterKey, searchPlaceHolder }) => {
 
@@ -8,7 +10,10 @@ const SearchBar = ({ onChange, handleEnterKey, searchPlaceHolder }) => {
                 onChange={onChange}
                 onKeyDown={handleEnterKey}
                 value={searchPlaceHolder}
+                className="input"
             />
+            <img className="searchIcon" src={pic} alt="alter" />
+            {/* <div className="searchIcon"></div> */}
         </div>
     )
 

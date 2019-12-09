@@ -3,7 +3,7 @@ import PopUp from "./components/PopUp/PopUp";
 import Background from "./components/Background/Background";
 import Grid from "./components/Grid/Grid"
 import SearchBar from './components/SearchBar/SearchBar';
-
+import "./styles.css"
 
 
 
@@ -101,19 +101,19 @@ class App extends Component {
         
         return (
             <div>
-                <Background 
+                {/* <Background 
                      accessKey= {accessKey}
-                  />
+                  /> */}
                  <SearchBar
                     onChange= {this.onChange}
                     handleEnterKey= {this.handleEnterKey}
                     value={ searchPlaceHolder }
                  />
-                <Grid
+                {/* <Grid
                    accessKey={accessKey}
                    handlePopUp={this.handlePopUp} 
                    searchValue={searchValue}  
-                />
+                /> */}
                 {
                     showLoadMore ?
                         <div><button onClick={this.handleLoadMore}>Load More</button></div>

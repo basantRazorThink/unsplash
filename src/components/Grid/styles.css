@@ -1,0 +1,23 @@
+.gridContainer{
+    display: inline-flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    width: 939px;
+    height: 660px;
+    /* border: 1px solid red; */
+  }
+  .gridItem{
+    /* border: 1px  solid green; */
+    width: 300px;
+    height: 200px;
+    border-radius: 8px;
+
+  }
+  .img{
+    /* width: 250px;
+    height: 185px;
+    border-radius: 8px; */
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }

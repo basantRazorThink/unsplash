@@ -28,20 +28,4 @@
   .popuppics{
     display: inline;
   }
-  .gridContainer{
-    display: inline-flex;
-    flex-flow: wrap;
-    justify-content: space-around;
-    width: 784px;
-    height: 742px;
-  }
-  .gridItem{
-    /* border: 1px  solid green; */
-    max-width: 200px;
-    max-height: 200px;
-
-  }
-  .img{
-    width:200px;
-    height: 200px;
-  }
+  

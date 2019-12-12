@@ -1,12 +1,12 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css"
-const Background = ( { accessKey } ) =>{
+const Background = ({ accessKey }) => {
 
-    const [ background, setBackground ] = useState(null); 
- 
-    useEffect( () => {
+    const [background, setBackground] = useState(null);
+
+    useEffect(() => {
         const fetchData = async () => {
-            const jsonData = await fetch(`https://api.unsplash.com/photos/random?&w=1600&h=800&client_id=${accessKey}`);
+            const jsonData = await fetch(`https://api.unsplash.com/photos/random?&w=1600&h=1000&client_id=${accessKey}`);
             const data = await jsonData.json();
             // console.log("from background dta is ==========>>>", data);
 
@@ -14,18 +14,19 @@ const Background = ( { accessKey } ) =>{
         }
 
         fetchData()
-        
+
     }, [])
 
     return (
-        <div className="background">
-           
-           { background  ?
-               <img className= "backgroundPic" src= {background.urls.custom} alt ={ background.alt_description}/>
-           : null}
-        </div>
-    )
+        <>{background ?
+            <div className="background" style={{
+                backgroundImage: `url(${background.urls.custom})`
+            }}></div>
+            : null}
+        </>
+    );
 
 }
 
 export default Background;
+

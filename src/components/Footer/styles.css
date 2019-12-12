@@ -1,0 +1,38 @@
+.footer{
+    display: flex;
+    /* border: 1px solid red; */
+    height: 300px;
+    align-items: center;
+}
+.footer-popular-searches{
+    /* border: 1px solid yellow; */
+    color: #fefefe;
+    font-weight: bold;
+    height: 40px;
+}
+.footerSearchTagContainer{
+    /* border: 1px solid blue; */
+    width: 400px;
+    height: 200px;
+}
+.footerSearchTag{
+    color: #e7a300;
+    /* border: 1px solid green; */
+    width: 130px;
+    height: 25px;
+    display: inline-block;
+    cursor: pointer;
+
+}
+.footerPopularSearchTag{
+    height: 200px;
+}
+.footer-logo{
+    font-weight: bold;
+    /* border: 1px solid #ff00eb; */
+    height: 90px;
+    /* line-height: 3; */
+    font-size: 45px;
+    color: #fefefe;
+    margin: 0 164px 0 0 ;
+}

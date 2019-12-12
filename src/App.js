@@ -1,8 +1,10 @@
 import React, { Component, useState, useEffect } from 'react';
 import PopUp from "./components/PopUp/PopUp";
 import Background from "./components/Background/Background";
-import Grid from "./components/Grid/Grid"
+import Grid from "./components/Grid/GridNew"
 import SearchBar from './components/SearchBar/SearchBar';
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import "./styles.css"
 
 
@@ -18,12 +20,18 @@ class App extends Component {
             showPopup: false,
             popUpPicId: null,
             dataOfPopUpPics: null,
-            searchPlaceHolder: " ",
-            searchValue: null
+            searchPlaceHolder: "Search for images here ",
+            searchValue: "random",
+            loadMore: false,
+            limitPerPage: '9-per-page'
         };
     }
 
-   
+    componentDidMount() {
+        this.setState({
+            currentPageNo: 1,
+        })
+    }
     onChange = (e) => {
         this.setState({
             searchPlaceHolder: e.target.value
@@ -31,45 +39,68 @@ class App extends Component {
     }
 
     handleEnterKey = async (e) => {
-
+       console.log("handle enter key called")
         const { searchPlaceHolder } = this.state;
-        console.log(" from handleEnterKey", e.key === "Enter")
+        // console.log(" from handleEnterKey", e.key === "Enter")
         e.key === "Enter" ? this.setState({
             searchValue: searchPlaceHolder
-        }): null
+        }) : null
 
     }
 
-    handleLoadMore = async () => {
-        let { currentPageNo, searchValue, accessKey, searchContent } = this.state;
-        if (!searchValue) {
-            searchValue = "random"
-        }
-        const limitPerPage = `9-per-page`;
-        const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=1&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`)
-        const data = await jsonData.json();
-        console.log("from handl more the data is", data)
+    // toggle loadmore if true convert it ot false if fasle convert it to true
+    handleLoadMore = () => {
+        // console.log("i m clicked")
+        // let { currentPageNo, searchValue, accessKey, searchContent } = this.state;
+        // if (!searchValue) {
+        //     searchValue = "random"
+        // }
+        // const limitPerPage = `9-per-page`;
+        // const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=1&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`)
+        // const data = await jsonData.json();
+        // // console.log("from handl more the data is", data)
 
-        if (currentPageNo < data.total_pages) {
-            this.setState({
-                currentPageNo: this.state.currentPageNo + 1,
-            }, async () => {
-                const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=${this.state.currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`)
-                const newData = await jsonData.json();
-                const finalData = searchContent.concat(newData.results);
+        // if (currentPageNo < data.total_pages) {
+        //     this.setState({
+        //         currentPageNo: this.state.currentPageNo + 1,
+        //     }, async () => {
+        //         const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=${this.state.currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`)
+        //         const newData = await jsonData.json();
+        //         const finalData = searchContent.concat(newData.results);
 
-                this.setState({
-                    searchContent: finalData
-                })
-            })
+        //         this.setState({
+        //             searchContent: finalData
+        //         })
+        //     })
 
-        }
-        if (currentPageNo == data.total_pages) {
-            this.setState({
-                showLoadMore: false
-            })
-        }
+        // }
+        // if (currentPageNo == data.total_pages) {
+        //     this.setState({
+        //         showLoadMore: false
+        //     })
+        // }
 
+        // this.setState({
+        //     loadMore: true
+        // })
+        this.setState({
+            loadMore: true
+        })
+
+    }
+
+    toggleHandleLoadMore = () => {
+        console.log("toggleHandleloadmore is called re baba")
+        this.setState({
+            loadMore: false
+        });
+    }
+
+    handleClick = e => {
+        const { searchPlaceHolder } = this.state
+        this.setState({
+            searchValue: searchPlaceHolder
+        })
     }
 
     togglePopup = async () => {
@@ -81,7 +112,7 @@ class App extends Component {
 
     handlePopUp = async (picId) => {
         const { accessKey, } = this.state;
-        console.log("4rm handlePopUPfunction of parent", accessKey, picId);
+        // console.log("4rm handlePopUPfunction of parent", accessKey, picId);
         const jsonData = await fetch(`https://api.unsplash.com/photos/${picId}?client_id=${accessKey}`);
         const data = await jsonData.json();
         // console.log("=======>>>>>>", data)
@@ -92,43 +123,77 @@ class App extends Component {
         })
 
     }
+    handleHeaderSearchTagClick = (searchValue) => {
+        // console.log("searchValue", searchValue, typeof(searchValue))
+        this.setState({
+            searchPlaceHolder: searchValue
+        })
+    }
+
+    handleInputClick = e => {
+        //  console.log("====::::::", e)
+        const { searchPlaceHolder } = this.state
+        if (searchPlaceHolder === "Search for images here " && e.type === "click") {
+            this.setState({
+                searchPlaceHolder: " "
+            })
+        }
+    }
+
+
 
     render() {
-        const { gridPics, searchPlaceHolder, showLoadMore, showPopup, popUpPicId, accessKey, dataOfPopUpPics , searchValue} = this.state;
-        console.log("from the render the state is", this.state)
-        
-        
-        
+        const { loadMore, searchPlaceHolder, showLoadMore, showPopup, popUpPicId, accessKey, dataOfPopUpPics, searchValue, limitPerPage } = this.state;
+        console.log("from the render of app the state is", this.state)
+        const { handleClick, onChange, handleEnterKey, handlePopUp, togglePopup, handleLoadMore, handleHeaderSearchTagClick, handleInputClick, toggleHandleLoadMore } = this;
+
+
         return (
-            <div>
-                {/* <Background 
-                     accessKey= {accessKey}
-                  /> */}
-                 <SearchBar
-                    onChange= {this.onChange}
-                    handleEnterKey= {this.handleEnterKey}
-                    value={ searchPlaceHolder }
-                 />
-                {/* <Grid
-                   accessKey={accessKey}
-                   handlePopUp={this.handlePopUp} 
-                   searchValue={searchValue}  
-                /> */}
-                {
-                    showLoadMore ?
-                        <div><button onClick={this.handleLoadMore}>Load More</button></div>
-                        : null
-                }
-                {showPopup ?
-                    <PopUp
-                        text='Click "Close Button" to hide popup'
-                        closePopup={this.togglePopup}
-                        popUpPicId={popUpPicId}
-                        accessKey={accessKey}
-                        data={dataOfPopUpPics}
+            <div className="container">
+                <Background
+                    accessKey={accessKey}
+                />
+                <div className="content">
+                    <Header
+                        handleHeaderSearchTagClick={handleHeaderSearchTagClick}
                     />
-                    : null
-                }
+                    <SearchBar
+                        onChange={onChange}
+                        handleEnterKey={handleEnterKey}
+                        value={searchPlaceHolder}
+                        handleClick={handleClick}
+                        placeholder={searchPlaceHolder}
+                        handleInputClick={handleInputClick}
+                    />
+                    <Grid
+                        accessKey={accessKey}
+                        handlePopUp={handlePopUp}
+                        searchValue={searchValue}
+                        loadMore={loadMore}
+                        toggleHandleLoadMore={toggleHandleLoadMore}
+                        limitPerPage={limitPerPage}
+                        toggleHandleLoadMore={toggleHandleLoadMore}
+
+                    />
+                    {
+                        showLoadMore ?
+                            <div><button className="loadBtn" onClick={handleLoadMore}>Load More</button></div>
+                            : null
+                    }
+                    {showPopup ?
+                        <PopUp
+                            text='Click "Close Button" to hide popup'
+                            closePopup={togglePopup}
+                            popUpPicId={popUpPicId}
+                            accessKey={accessKey}
+                            data={dataOfPopUpPics}
+                        />
+                        : null
+                    }
+                    <Footer
+                        handleHeaderSearchTagClick={handleHeaderSearchTagClick}
+                    />
+                </div>
 
 
             </div>

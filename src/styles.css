@@ -2,3 +2,22 @@
    padding: 0;
    margin: 0; 
 }
+.container{
+    border: 1px solid green;
+    height: 1000px;
+}
+.content{
+    width: 975px;
+    margin: 0 auto;
+}
+.loadBtn{
+    width: 147px;
+    height: 38px;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+    color: #e4f9f8;
+    background-color: #00bfb8;
+    font-weight: bold;
+    cursor: pointer;
+}

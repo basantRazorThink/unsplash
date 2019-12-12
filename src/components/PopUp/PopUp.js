@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.css';
 
 const PopUp  = (props) => {
-    console.log("in the  popup the props is", props)
+    // console.log("in the  popup the props is", props)
     const { data, text, closePopup } = props;
     return ( 
       <div className='popup'>

@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "./styles.css";
 import FetchUtility from "../../FetchUtility";
 
-
-
-
 class Grid extends Component {
     constructor(props) {
         super(props);
@@ -28,10 +25,8 @@ class Grid extends Component {
 
     componentDidUpdate(prevProps) {
         const { accessKey, limitPerPage, searchValue, loadMore, toggleHandleLoadMore } = this.props;
-        console.log("from componentdidiupdate", prevProps.loadMore, this.props);
         const { currentPageNo, gridContents } = this.state;
         if ((prevProps.searchValue !== searchValue)) {
-            console.log("from if of compodidupdate", prevProps.loadMore, loadMore);
             let res = FetchUtility(accessKey, currentPageNo, limitPerPage, searchValue)
             res
                 .then(res => {
@@ -42,12 +37,11 @@ class Grid extends Component {
 
                             ,
                             () => {
-                                console.log("hari om ", this.state.currentPageNo);
                                 toggleHandleLoadMore()
                                 let res = FetchUtility(accessKey, this.state.currentPageNo, limitPerPage, searchValue)
                                 res
                                     .then(res =>
-                                        this.setState({ gridContents: [ ...res.results] }))
+                                        this.setState({ gridContents: [...res.results] }))
                                     .catch(e => console.log(e));
                             }
                         )
@@ -57,36 +51,8 @@ class Grid extends Component {
 
 
         }
-        // else if ((prevProps.searchValue === searchValue) && searchValue !== "random") {
-        //     console.log("from if of compodidupdate", prevProps.loadMore, loadMore);
-        //     let res = FetchUtility(accessKey, currentPageNo, limitPerPage, searchValue)
-        //     res
-        //         .then(res => {
-        //             if (currentPageNo < res.total_pages) {
-        //                 this.setState({
-        //                     currentPageNo: this.state.currentPageNo + 1,
-        //                 }
-
-        //                     ,
-        //                     () => {
-        //                         console.log("hari om ", this.state.currentPageNo);
-        //                         toggleHandleLoadMore()
-        //                         let res = FetchUtility(accessKey, this.state.currentPageNo, limitPerPage, searchValue)
-        //                         res
-        //                             .then(res =>
-        //                                 this.setState({ gridContents: [...this.state.gridContents, ...res.results] }))
-        //                             .catch(e => console.log(e));
-        //                     }
-        //                 )
-        //             }
-        //         })
-        //         .catch(e => console.log(e));
-
-
-        // }
-        if (prevProps.loadMore === false && loadMore === true) {
-            console.log("from if of compodidupdate", prevProps.loadMore, loadMore);
-            let res = FetchUtility(accessKey, currentPageNo, limitPerPage, searchValue)
+        else if (prevProps.loadMore === false && loadMore === true) {
+            let res = FetchUtility(accessKey, currentPageNo, limitPerPage, searchValue);
             res
                 .then(res => {
                     if (currentPageNo < res.total_pages) {
@@ -96,7 +62,6 @@ class Grid extends Component {
 
                             ,
                             () => {
-                                console.log("hari om ", this.state.currentPageNo);
                                 toggleHandleLoadMore()
                                 const temp = gridContents;
                                 let res = FetchUtility(accessKey, this.state.currentPageNo, limitPerPage, searchValue)
@@ -113,20 +78,12 @@ class Grid extends Component {
 
 
         }
-
-
-
-
-
-
-
     }
 
 
     render() {
         const { gridContents } = this.state;
-        const { handlePopUp } = this.props
-        console.log("from the render of the grid the gridcontents is", this.state)
+        const { handlePopUp } = this.props;
         return (
             <div className="gridContainer">
                 {gridContents ? gridContents.map((pic, index) => (
@@ -138,9 +95,19 @@ class Grid extends Component {
                             backgroundImage: `url(${pic.urls.small})`,
                         }}
                         onClick={() => {
-                            handlePopUp(pic.id);
-                        }}
-                    />
+                            handlePopUp(pic.id, pic.user);
+                        }}>
+                        <div className="profile-container">
+                            <div className="profile-pic" style={{ backgroundImage: `url(${pic.user.profile_image.small})` }}></div>
+                            <div className="profile-name-ctn">
+                                <span className="profile-name-by">Image by</span>
+                                <span className="profile-name">{pic.user.name}</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+
                 )) : null}
             </div>
         );

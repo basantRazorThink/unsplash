@@ -6,7 +6,7 @@ const Header = ({ handleHeaderSearchTagClick }) => {
   // console.log("from the header the headerseacrhtags is ====", handleHeaderSearchTagClick)
   return (
     <div className="header">
-      <div className="header-logo">Search <span className="header-logo-span">it</span></div>
+      <span className="header-logo-left-span">Search</span><span className="header-logo-right-span">it</span>
       <div className="header-top-slogan">Free stock photos for everything</div>
       <div className="header-bottom-slogan">We offer the best free photo's all in one place</div>
       {

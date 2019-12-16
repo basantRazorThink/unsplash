@@ -39,7 +39,7 @@ class App extends Component {
     }
 
     handleEnterKey = async (e) => {
-       console.log("handle enter key called")
+        console.log("handle enter key called")
         const { searchPlaceHolder } = this.state;
         // console.log(" from handleEnterKey", e.key === "Enter")
         e.key === "Enter" ? this.setState({
@@ -110,15 +110,18 @@ class App extends Component {
 
     }
 
-    handlePopUp = async (picId) => {
+    handlePopUp = async (picId,picUser) => {
         const { accessKey, } = this.state;
         // console.log("4rm handlePopUPfunction of parent", accessKey, picId);
         const jsonData = await fetch(`https://api.unsplash.com/photos/${picId}?client_id=${accessKey}`);
         const data = await jsonData.json();
         // console.log("=======>>>>>>", data)
-        const finalDataForPopUp = await data.urls.small
+        // const DataForPopUp = await data;
+        // let finalDataForPopUp ={
+        //     DataForPopUp, picUser
+        // }
         this.setState({
-            dataOfPopUpPics: finalDataForPopUp,
+            dataOfPopUpPics: data,
             showPopup: !this.state.showPopup
         })
 
@@ -126,7 +129,8 @@ class App extends Component {
     handleHeaderSearchTagClick = (searchValue) => {
         // console.log("searchValue", searchValue, typeof(searchValue))
         this.setState({
-            searchPlaceHolder: searchValue
+            searchPlaceHolder: searchValue,
+            searchValue: searchValue
         })
     }
 
@@ -150,36 +154,39 @@ class App extends Component {
 
         return (
             <div className="container">
-                <Background
-                    accessKey={accessKey}
-                />
-                <div className="content">
-                    <Header
-                        handleHeaderSearchTagClick={handleHeaderSearchTagClick}
-                    />
-                    <SearchBar
-                        onChange={onChange}
-                        handleEnterKey={handleEnterKey}
-                        value={searchPlaceHolder}
-                        handleClick={handleClick}
-                        placeholder={searchPlaceHolder}
-                        handleInputClick={handleInputClick}
-                    />
-                    <Grid
-                        accessKey={accessKey}
-                        handlePopUp={handlePopUp}
-                        searchValue={searchValue}
-                        loadMore={loadMore}
-                        toggleHandleLoadMore={toggleHandleLoadMore}
-                        limitPerPage={limitPerPage}
-                        toggleHandleLoadMore={toggleHandleLoadMore}
 
+                <div className="content">
+                    <Background
+                        accessKey={accessKey}
                     />
-                    {
-                        showLoadMore ?
-                            <div><button className="loadBtn" onClick={handleLoadMore}>Load More</button></div>
-                            : null
-                    }
+                    <div className="content-grid">
+                        <Header
+                            handleHeaderSearchTagClick={handleHeaderSearchTagClick}
+                        />
+                        <SearchBar
+                            onChange={onChange}
+                            handleEnterKey={handleEnterKey}
+                            value={searchPlaceHolder}
+                            handleClick={handleClick}
+                            placeholder={searchPlaceHolder}
+                            handleInputClick={handleInputClick}
+                        />
+                        <Grid
+                            accessKey={accessKey}
+                            handlePopUp={handlePopUp}
+                            searchValue={searchValue}
+                            loadMore={loadMore}
+                            toggleHandleLoadMore={toggleHandleLoadMore}
+                            limitPerPage={limitPerPage}
+                            toggleHandleLoadMore={toggleHandleLoadMore}
+
+                        />
+                        {
+                            showLoadMore ?
+                                <div className="btn-container"><button className="loadBtn" onClick={handleLoadMore}>Load More</button></div>
+                                : null
+                        }
+                    </div>
                     {showPopup ?
                         <PopUp
                             text='Click "Close Button" to hide popup'
@@ -187,14 +194,15 @@ class App extends Component {
                             popUpPicId={popUpPicId}
                             accessKey={accessKey}
                             data={dataOfPopUpPics}
+                            accessKey={accessKey}
                         />
                         : null
                     }
-                    <Footer
-                        handleHeaderSearchTagClick={handleHeaderSearchTagClick}
-                    />
-                </div>
 
+                </div>
+                <Footer
+                    handleHeaderSearchTagClick={handleHeaderSearchTagClick}
+                />
 
             </div>
         );
@@ -202,3 +210,4 @@ class App extends Component {
 }
 export default App;
 
+// slanting cut in html

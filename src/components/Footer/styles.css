@@ -2,6 +2,15 @@
     display: flex;
     /* border: 1px solid red; */
     height: 300px;
+    justify-content: center;
+    align-items: center;
+    background: #191c24;
+
+}
+.footer-content{
+    width: 935px;
+    margin: 0 auto;
+    display: flex;
     align-items: center;
 }
 .footer-popular-searches{
@@ -27,7 +36,7 @@
 .footerPopularSearchTag{
     height: 200px;
 }
-.footer-logo{
+.footer-logo-container{
     font-weight: bold;
     /* border: 1px solid #ff00eb; */
     height: 90px;
@@ -35,4 +44,7 @@
     font-size: 45px;
     color: #fefefe;
     margin: 0 164px 0 0 ;
+}
+.footer-logo-span{
+    color: #00bfb8;
 }

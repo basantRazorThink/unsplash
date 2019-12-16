@@ -4,6 +4,11 @@ import pic from "./icons8-search-50 (1).png";
 
 const SearchBar = ({ onChange, handleEnterKey, value, handleClick, placeHolder,handleInputClick }) => {
     //  console.log("from searchbar", value)
+
+    // useEffect(()=>{
+    //     document.getElementsByClassName="input".setCaret(50)
+    // })
+
     return (
        
         <div className="searchInputContainer">

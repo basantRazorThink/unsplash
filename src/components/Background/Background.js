@@ -19,10 +19,14 @@ const Background = ({ accessKey }) => {
 
     return (
         <>{background ?
-            <div className="background" style={{
-                backgroundImage: `url(${background.urls.custom})`
-            }}></div>
+            <div className="background-container" >
+                <div 
+                className="background-image"
+                style={{backgroundImage: `url(${background.urls.custom})`}}></div>
+                <div className="triangle"></div>
+            </div>
             : null}
+
         </>
     );
 

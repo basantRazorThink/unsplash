@@ -8,6 +8,9 @@
     bottom: 0;  
     margin: auto;  
     background-color: rgba(0,0,0, 0.5);  
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }  
   .popup\_inner {  
     position: absolute;  
@@ -28,4 +31,62 @@
   .popuppics{
     display: inline;
   }
-  
+  .pop-up-container{
+    width: 1000px;
+    height: 500px;
+    background: #ffffff;
+    border-radius: 14px;
+
+  }
+  .pop-up-pic{
+    width: 900px;
+    height: 300px;
+    margin: 0 auto;
+    background-size: 100% 100%;
+  }
+  .cancelButton{
+    background-image: url(/a42732e….png);
+    height: 34px;
+    width: 34px;
+    /* position: absolute; */
+    background-size: contain;
+    /* border: 1px solid red; */
+    border-radius: 50%;
+    /* left: 0; */
+    position: relative;
+    top: -18px;
+    /* right: -37px; */
+    left: 982px;
+  }
+
+  .profile-info-ctn{
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    height: 60px;
+  }
+  .pop-up-profile-pic{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin: 0px 15px 0 50px;
+  }
+  .pop-up-dwnld-btn{
+    border: 1px solid red;
+  }
+  .dwnld{
+    text-decoration: none;
+    color: #e4f9f8;
+    display: block;
+    height: 30px;
+    width: 135px;
+    border-radius: 14px;
+    text-align: center;
+    line-height: 1.9;
+    background-color: #00bfb7;
+    margin: 0 auto;
+  }
+  .dwnld-btn-container{
+    height: 55px;
+    padding: 23px 0 0 0;
+  }

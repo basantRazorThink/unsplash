@@ -3,10 +3,7 @@ import './styles.css';
 import cancelIcon from "./cancelIcon.png"
 
 const PopUp = (props) => {
-  console.log("in the  popup the props is", props)
   const { data, text, closePopup, accessKey } = props;
-
-
   return (
     <div className='popup'>
 
@@ -23,7 +20,7 @@ const PopUp = (props) => {
             target="_blank"
             download
           >
-            download
+            Download
           </a>
         </div>
       </div>

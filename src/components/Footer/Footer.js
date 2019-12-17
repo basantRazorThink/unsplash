@@ -2,8 +2,6 @@ import React from "react";
 import { footerSearchTags } from "../../Constants";
 import "./styles.css"
 const Footer = ({ handleHeaderSearchTagClick }) => {
-    // console.log("from footer", footerSearchTags);
-
     return (<div className="footer">
         <div className="footer-content">
             <div className="footer-logo-container"><span>Search</span><span className="footer-logo-span">it</span></div>

@@ -1,9 +1,7 @@
-const FetchUtility = async (accessKey,currentPageNo, limitPerPage, searchValue) => {
-
-    console.log("from utility.js", accessKey, limitPerPage, searchValue)
-
-    const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=${currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`);
-    return  await jsonData.json();
+const FetchUtility = async (url) => {
+ const jsonData = await fetch(url);
+ return  jsonData.status === 200?
+     await jsonData.json(): "server not reachable"
 }
 
 export default FetchUtility

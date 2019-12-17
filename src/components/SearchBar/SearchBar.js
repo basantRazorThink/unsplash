@@ -3,16 +3,9 @@ import "./styles.css";
 import pic from "./icons8-search-50 (1).png";
 
 const SearchBar = ({ onChange, handleEnterKey, value, handleClick, placeHolder,handleInputClick }) => {
-    //  console.log("from searchbar", value)
-
-    // useEffect(()=>{
-    //     document.getElementsByClassName="input".setCaret(50)
-    // })
-
     return (
        
         <div className="searchInputContainer">
-             {/* {console.log("from seacrchbar", `url(${pic})`)} */}
             <input
                 onChange={onChange}
                 onKeyDown={handleEnterKey}
@@ -27,12 +20,9 @@ const SearchBar = ({ onChange, handleEnterKey, value, handleClick, placeHolder,h
                    backgroundImage: `url(${pic})`
                 }} 
                 onClick={handleClick}
-                //   style={{backgroundImage: `url("./searchIcon.png")`}} 
 
                >
             </div> 
-            {/* <img className="searchIcon" src={pic} alt="searchIcon"/> */}
-            {/* <div className="searchIcon"></div> */}
         </div>
     )
 

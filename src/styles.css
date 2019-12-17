@@ -12,10 +12,11 @@
     margin: 0 auto; */
     position: relative;
 }
-.btn-container{
+/* .btn-container{
     height: 70px;
     padding: 30px 0 0 0;
-}
+    margin: auto;
+} */
 
 .content-grid{
     width: 936px;

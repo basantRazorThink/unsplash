@@ -9,6 +9,7 @@ import "./styles.css"
 
 
 
+
 class App extends Component {
     constructor() {
         super();
@@ -39,50 +40,15 @@ class App extends Component {
     }
 
     handleEnterKey = async (e) => {
-        console.log("handle enter key called")
+        // console.log("handle enter key called")
         const { searchPlaceHolder } = this.state;
-        // console.log(" from handleEnterKey", e.key === "Enter")
         e.key === "Enter" ? this.setState({
             searchValue: searchPlaceHolder
         }) : null
 
     }
-
-    // toggle loadmore if true convert it ot false if fasle convert it to true
+    
     handleLoadMore = () => {
-        // console.log("i m clicked")
-        // let { currentPageNo, searchValue, accessKey, searchContent } = this.state;
-        // if (!searchValue) {
-        //     searchValue = "random"
-        // }
-        // const limitPerPage = `9-per-page`;
-        // const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=1&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`)
-        // const data = await jsonData.json();
-        // // console.log("from handl more the data is", data)
-
-        // if (currentPageNo < data.total_pages) {
-        //     this.setState({
-        //         currentPageNo: this.state.currentPageNo + 1,
-        //     }, async () => {
-        //         const jsonData = await fetch(`https://api.unsplash.com/search/photos?page=${this.state.currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`)
-        //         const newData = await jsonData.json();
-        //         const finalData = searchContent.concat(newData.results);
-
-        //         this.setState({
-        //             searchContent: finalData
-        //         })
-        //     })
-
-        // }
-        // if (currentPageNo == data.total_pages) {
-        //     this.setState({
-        //         showLoadMore: false
-        //     })
-        // }
-
-        // this.setState({
-        //     loadMore: true
-        // })
         this.setState({
             loadMore: true
         })
@@ -90,7 +56,7 @@ class App extends Component {
     }
 
     toggleHandleLoadMore = () => {
-        console.log("toggleHandleloadmore is called re baba")
+        // console.log("toggleHandleloadmore is called re baba")
         this.setState({
             loadMore: false
         });
@@ -112,14 +78,8 @@ class App extends Component {
 
     handlePopUp = async (picId,picUser) => {
         const { accessKey, } = this.state;
-        // console.log("4rm handlePopUPfunction of parent", accessKey, picId);
         const jsonData = await fetch(`https://api.unsplash.com/photos/${picId}?client_id=${accessKey}`);
         const data = await jsonData.json();
-        // console.log("=======>>>>>>", data)
-        // const DataForPopUp = await data;
-        // let finalDataForPopUp ={
-        //     DataForPopUp, picUser
-        // }
         this.setState({
             dataOfPopUpPics: data,
             showPopup: !this.state.showPopup
@@ -127,7 +87,6 @@ class App extends Component {
 
     }
     handleHeaderSearchTagClick = (searchValue) => {
-        // console.log("searchValue", searchValue, typeof(searchValue))
         this.setState({
             searchPlaceHolder: searchValue,
             searchValue: searchValue
@@ -135,7 +94,6 @@ class App extends Component {
     }
 
     handleInputClick = e => {
-        //  console.log("====::::::", e)
         const { searchPlaceHolder } = this.state
         if (searchPlaceHolder === "Search for images here " && e.type === "click") {
             this.setState({
@@ -148,7 +106,7 @@ class App extends Component {
 
     render() {
         const { loadMore, searchPlaceHolder, showLoadMore, showPopup, popUpPicId, accessKey, dataOfPopUpPics, searchValue, limitPerPage } = this.state;
-        console.log("from the render of app the state is", this.state)
+        // console.log("from the render of app the state is", this.state)
         const { handleClick, onChange, handleEnterKey, handlePopUp, togglePopup, handleLoadMore, handleHeaderSearchTagClick, handleInputClick, toggleHandleLoadMore } = this;
 
 
@@ -179,13 +137,14 @@ class App extends Component {
                             toggleHandleLoadMore={toggleHandleLoadMore}
                             limitPerPage={limitPerPage}
                             toggleHandleLoadMore={toggleHandleLoadMore}
+                            handleLoadMore={handleLoadMore}
 
                         />
-                        {
+                        {/* {
                             showLoadMore ?
                                 <div className="btn-container"><button className="loadBtn" onClick={handleLoadMore}>Load More</button></div>
                                 : null
-                        }
+                        } */}
                     </div>
                     {showPopup ?
                         <PopUp

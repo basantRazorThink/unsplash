@@ -1,8 +1,10 @@
 import React from "react";
 import "./styles.css";
 import { headerSearchTags } from "../../Constants"
+import HeaderSearchtag from "./HeaderSearchTags"
 
 const Header = ({ handleHeaderSearchTagClick }) => {
+  console.log("header rendered");
   return (
     <div className="header">
       <span className="header-logo-left-span">Search</span><span className="header-logo-right-span">it</span>
@@ -11,10 +13,11 @@ const Header = ({ handleHeaderSearchTagClick }) => {
       {
         headerSearchTags ? <div className="header-search-tags">
           <div className="headerSearchTag">Search by tags:</div>
-          {headerSearchTags.map((tag, index) => <div className="searchTagKey"
-            onClick={() => {
-              handleHeaderSearchTagClick(tag);
-            }} key={index}>{tag}</div>)}
+          {headerSearchTags.map((tag, index) => <HeaderSearchtag
+            tag={tag}
+            index={index}
+            handleHeaderSearchTagClick={handleHeaderSearchTagClick} 
+            key={index}/>)}
         </div> : null
       }
     </div>

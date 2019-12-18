@@ -16,13 +16,16 @@ const Background = ({ accessKey }) => {
         fetchData()
 
     }, [])
-
+    console.log("background rendered");
     return (
+        
         background ?
             <div className="background-container" >
                 <div 
                 className="background-image"
-                style={{backgroundImage: `url(${background.urls.custom})`}}></div>
+                style={{backgroundImage: `url(${background.urls.custom})`}}
+                >
+                </div>
                 <div className="triangle"></div>
             </div>
             : null

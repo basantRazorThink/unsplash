@@ -53,8 +53,7 @@ class GridContainer extends Component {
         const { currentPageNo, gridContents } = this.state;
 
         // if user selects different search keywords from popular searches or enters a keyword in the searchbar
-        // console.log("from compo did mount of grid container", searchValue, loadMore);
-        // when the searchValue changes 
+        // i.e when the searchValue changes any how
         if (prevProps.searchValue !== searchValue) {
             // first show loader
             this.setState({ isLoading: true, currentPageNo: 1, alertNoMorePics: false }, () => {

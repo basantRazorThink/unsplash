@@ -19,11 +19,6 @@ const Grid = ({ pic, index, handlePopUp }) => {
                 <ProfileContainer 
                  picUserName={pic.user.name}
                 />
-                {/* <div className="profile-name-ctn">
-                    <span className="profile-name-by">Image by</span>
-                    <span className="profile-name">{pic.user.name}</span>
-                </div> */}
-
             </div>
         </div>
     )

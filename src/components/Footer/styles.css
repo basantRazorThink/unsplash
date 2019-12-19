@@ -3,7 +3,7 @@
     /* border: 1px solid red; */
     height: 300px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     background: #191c24;
 
 }
@@ -53,7 +53,7 @@
 .footerPopularSearchTagContainer{
     /* border: 1px solid red; */
     display: flex;
-    height: 200px;
+    height: 155px;
     flex-flow: wrap;
     width: 350px;
 }

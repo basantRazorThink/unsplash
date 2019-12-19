@@ -4,7 +4,7 @@ import cancelIcon from "./cancelIcon.png"
 
 const PopUp = (props) => {
   const { data, text, closePopup, accessKey } = props;
-  console.log("PopUp rendered");
+  // console.log("PopUp rendered");
   return (
     <div className='popup'>
 

@@ -241,3 +241,16 @@ class Grid extends Component {
 }
 
 export default Grid;
+
+
+
+
+// currentPageNo <= res.total_pages)?
+//                         this.setState({
+//                             // update the grids by adding the new contents to the grid
+//                             gridContents: [ ...this.state.gridContents,...res.results],
+//                             isLoading: false,
+//                          },() => toggleHandleLoadMore()): 
+//                           this.setState(
+//                               {isLoading: false, showLoadMore: false, alertNoMorePics: true},() => toggleHandleLoadMore())
+                    

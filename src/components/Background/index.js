@@ -16,7 +16,7 @@ const Background = ({ accessKey }) => {
         fetchData()
 
     }, [])
-    console.log("background rendered");
+    // console.log("background rendered");
     return (
         
         background ?

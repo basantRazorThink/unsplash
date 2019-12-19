@@ -3,7 +3,7 @@ import { footerSearchTags } from "../../Constants";
 import HeaderSearchtag from "../Header/HeaderSearchTags"
 import "./styles.css"
 const Footer = ({ handleHeaderSearchTagClick }) => {
-    console.log("Footer rendered");
+    // console.log("Footer rendered");
     return (<div className="footer">
         <div className="footer-content">
             <div className="footer-logo-container"><span>Search</span><span className="footer-logo-span">it</span></div>
@@ -14,6 +14,7 @@ const Footer = ({ handleHeaderSearchTagClick }) => {
                         tag={tag}
                         index={index}
                         key={index}
+                        styleName="footerSearchTag"
                     handleHeaderSearchTagClick={handleHeaderSearchTagClick} />)}
                 </div>
             </div> : null}
@@ -23,3 +24,5 @@ const Footer = ({ handleHeaderSearchTagClick }) => {
 }
 
 export default Footer;
+
+// implement the .footerSearchTag class

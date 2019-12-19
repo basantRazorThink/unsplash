@@ -1,7 +1,8 @@
 import React from "react";
+import ProfileContainer from "../ProfileContainer"
 
 const Grid = ({ pic, index, handlePopUp }) => {
-    console.log("Grid rendered");
+    // console.log("Grid rendered");
     return (
         <div
             key={index}
@@ -15,10 +16,13 @@ const Grid = ({ pic, index, handlePopUp }) => {
             }}>
             <div className="profile-container">
                 <div className="profile-pic" style={{ backgroundImage: `url(${pic.user.profile_image.small})` }}></div>
-                <div className="profile-name-ctn">
+                <ProfileContainer 
+                 picUserName={pic.user.name}
+                />
+                {/* <div className="profile-name-ctn">
                     <span className="profile-name-by">Image by</span>
                     <span className="profile-name">{pic.user.name}</span>
-                </div>
+                </div> */}
 
             </div>
         </div>

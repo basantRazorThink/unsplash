@@ -18,23 +18,25 @@
     color: #fefefe;
     font-weight: bold;
     height: 40px;
+    padding: 0 0 0 22px;
 }
 .footerSearchTagContainer{
     /* border: 1px solid blue; */
-    width: 400px;
-    height: 200px;
+    width: 351px;
+    height: 241px;
 }
-.footerSearchTag{
+/* .footerSearchTag{
     color: #e7a300;
-    /* border: 1px solid green; */
+    border: 1px solid green;
     width: 130px;
     height: 25px;
     display: inline-block;
     cursor: pointer;
 
-}
+} */
 .footerPopularSearchTag{
     height: 200px;
+
 }
 .footer-logo-container{
     font-weight: bold;
@@ -43,8 +45,25 @@
     /* line-height: 3; */
     font-size: 45px;
     color: #fefefe;
-    margin: 0 164px 0 0 ;
+    margin: 0 130px 0 0 ;
 }
 .footer-logo-span{
     color: #00bfb8;
+}
+.footerPopularSearchTagContainer{
+    /* border: 1px solid red; */
+    display: flex;
+    height: 200px;
+    flex-flow: wrap;
+    width: 350px;
+}
+.footerSearchTag{
+    /* border: 1px solid #70a26a; */
+    width: 70px;
+    color: #db9e00;
+    margin: 0 22px;
+    cursor: pointer;
+    padding-top: 4px;
+    /* display: inline; */
+    text-align: left;
 }

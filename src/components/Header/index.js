@@ -4,7 +4,7 @@ import { headerSearchTags } from "../../Constants"
 import HeaderSearchtag from "./HeaderSearchTags"
 
 const Header = ({ handleHeaderSearchTagClick }) => {
-  console.log("header rendered");
+  // console.log("header rendered");
   return (
     <div className="header">
       <span className="header-logo-left-span">Search</span><span className="header-logo-right-span">it</span>

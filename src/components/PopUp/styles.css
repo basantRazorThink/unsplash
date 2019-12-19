@@ -33,14 +33,14 @@
   }
   .pop-up-container{
     width: 1000px;
-    height: 500px;
+    height: 600px;
     background: #ffffff;
     border-radius: 14px;
 
   }
   .pop-up-pic{
     width: 900px;
-    height: 300px;
+    height: 430px;
     margin: 0 auto;
     background-size: 100% 100%;
   }

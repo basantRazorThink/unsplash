@@ -1,5 +1,5 @@
 import React from "react";
-import Background from "../Background";
+import PopUp from "../PopUp";
 import GridContainer from "../Grid/GridContainer";
 import SearchBar from "../SearchBar";
 import Header from "../Header";

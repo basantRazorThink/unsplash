@@ -1,8 +1,8 @@
 import React from "react";
 
-const HeaderSearchTag = ({tag, index, handleHeaderSearchTagClick}) => {
+const HeaderSearchTag = ({tag, index, handleHeaderSearchTagClick , styleName}) => {
 
-    return <div className="searchTagKey"
+    return <div className={`searchTagKey ${styleName}`}
         onClick={() => {
             //make this map function a component
             handleHeaderSearchTagClick(tag);

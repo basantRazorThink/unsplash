@@ -6,7 +6,7 @@ import "./styles.css";
 
 class App extends Component {
     render() {
-        console.log("APP.JS rendered");
+        // console.log("APP.JS rendered");
         return (
             <div className="container">
                 <Background

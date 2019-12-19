@@ -3,7 +3,7 @@ import "./styles.css";
 import pic from "./icons8-search-50 (1).png";
 
 const SearchBar = ({ onChange, handleEnterKey, value, handleClick, placeHolder,handleInputClick }) => {
-    console.log("SearchBar rendered");
+    // console.log("SearchBar rendered");
     return (
        
         <div className="searchInputContainer">

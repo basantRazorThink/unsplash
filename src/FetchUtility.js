@@ -1,8 +1,28 @@
 const FetchUtility = async (url) => {
-    console.log("from fetch utility the url is", url)
- const jsonData = await fetch(url);
- return  jsonData.status === 200?
-     await jsonData.json(): "server not reachable"
+    try {
+        const jsonData = await fetch(url);
+        if(jsonData.status === 200) {
+            const res = await jsonData.json();
+            return res;
+        } else {
+            return ({ message: 'Server Error'});
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
+
 }
+
+// const fn = (url) => {
+//     const response = FetchUtility(url);
+//     let result;
+//     response.then(resol => {
+//         console.log('resol', resol);
+//         result = resol;
+//     });
+//     console.log('result', result);
+//     return result;
+// }
 
 export default FetchUtility

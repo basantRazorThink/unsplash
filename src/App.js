@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import Background from "./components/Background";
-import Main from "./components/Main";
+import Main from "./components/Main/Main";
 import { client_id } from "./Constants";
 import "./styles.css";
 

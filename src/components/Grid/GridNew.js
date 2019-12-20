@@ -1,238 +1,176 @@
 import React, { Component } from "react";
+import Grid from "./Grid1"
 import "./styles.css";
 import FetchUtility from "../../FetchUtility";
+import Alert from "../Alert"
+import { url, client_id, loaderGifUrl } from "../../Constants";
 
-class Grid extends Component {
+const urlConstructor = (urlParamObj) => {
+    debugger;
+    let finalUrl = url;
+    for (let paramKey in urlParamObj) {
+        finalUrl = finalUrl.replace(`:${paramKey}`, urlParamObj[paramKey])
+    }
+    return finalUrl;
+
+}
+
+class GridContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            currentPageNo: 1,
+            currentPageNo: 1,// to determine the current page
             gridContents: null,
-            isLoading: true,
-            searchFound: false,
+            isLoading: true, // for loader
+            searchFound: false,// try to replace its logic with gridContents
             showLoadMore: true,
-            alertNoMorePics: false
+            alertNoMorePics: false// if the user has viewed all the pages and no more pics are there to show
         }
     }
 
     componentDidMount() {
-        const { accessKey, limitPerPage, searchValue } = this.props;
+        const { limitPerPage, searchValue } = this.props;
         const { currentPageNo } = this.state;
-
-        let url = `https://api.unsplash.com/search/photos?page=${currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`;
-
-        let res = FetchUtility(url)
-
+        let urlParamObj = { currentPageNo, limitPerPage, searchValue, client_id }
+        let urlToFetch = urlConstructor(urlParamObj);
+        let res = FetchUtility(urlToFetch)
         res
             .then(res => this.setState({ gridContents: res.results }))
             .catch(e => console.log(e));
+
         this.setState({
-            isLoading: false,
-        })
+            isLoading: false,// stop loader 
+        });
 
     }
+    // cases when the component grid updates
+    // 1: if user selects different search keywords from popular searches or enters a keyword in the searchbar.
+    // 2:  when the user hits the loadmore button
 
     componentDidUpdate(prevProps) {
-        const { accessKey, limitPerPage, searchValue, loadMore, toggleHandleLoadMore } = this.props;
+        const { limitPerPage, searchValue, loadMore, toggleHandleLoadMore } = this.props;
         const { currentPageNo, gridContents } = this.state;
 
         // if user selects different search keywords from popular searches or enters a keyword in the searchbar
+        // i.e when the searchValue changes any how
         if (prevProps.searchValue !== searchValue) {
-            // console.log("from componn did update of grid the prevProps.search value and searchValue is", prevProps.searchValue, searchValue, prevProps.searchValue !== searchValue);
-            this.setState({
-                isLoading: true,
-                currentPageNo: 1,
-                alertNoMorePics: false
-            }, () => {
-                let url = `https://api.unsplash.com/search/photos?page=${this.state.currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`;
-
-                let res = FetchUtility(url);
+            // first show loader
+            this.setState({ isLoading: true, currentPageNo: 1, alertNoMorePics: false }, () => {
+                // check below line for state update
+                let urlParamObj = { currentPageNo: this.state.currentPageNo, limitPerPage, searchValue, client_id }
+                let urlToFetch = urlConstructor(urlParamObj);
+                let res = FetchUtility(urlToFetch)
                 res
-                    .then(res => {
-
-                        //         console.log("========>", res)
-                        // if(res === "server not reachable"){
-                        //     this.setState({
-                        //         isLoading: true,
-                        //         searchFound: true
-                        //     })
-                        // }
-
-                        // if (res.results.length === 0) {
-                        //     return this.setState({
-                        //         isLoading: false,
-                        //         searchFound: true,
-                        //         showLoadMore: false
-
-                        //     })
-                        // }
-                        if (currentPageNo < res.total_pages) {
+                    .then(res =>
+                        // cases when searchValue changes
+                        // 1. pic of entered keyword is found, then populate the gridContents
+                        // 2. pic of entered keyword is not found, then show content not found
+                        (res.results.length) ?
                             this.setState({
-                                // currentPageNo: this.state.currentPageNo + 1,
-                                searchFound: false,
-                                showLoadMore: true,
-                                gridContents: [...res.results], isLoading: false
-                            });
-                            toggleHandleLoadMore()
-                        }
-                        // cases if no more pages is found
-                         if (res.results.length === 0) {
-                            return this.setState({
+                                gridContents: res.results,
                                 isLoading: false,
-                                searchFound: true,
+                                showLoadMore: true
+                            }) : this.setState({
+                                gridContents: null,
+                                isLoading: false,
                                 showLoadMore: false
-
-                            });
-                        }
-                    })
+                            })
+                    )
                     .catch(e => console.log(e));
             })
 
 
+        }
+
+        // when the user hits the load more button
+        if (prevProps.loadMore === false && loadMore === true) {
+            console.log("loadMore has changed", prevProps.loadMore, loadMore);
+            // first show loader and increment the currentPageNo is incremented
+            // check below line for state update
+            this.setState({ isLoading: true, currentPageNo: this.state.currentPageNo + 1 }, () => {
+
+
+                // get the searchvalue(keywords entered) pics
+                let urlParamObj = { currentPageNo: this.state.currentPageNo, limitPerPage, searchValue, client_id }
+                let urlToFetch = urlConstructor(urlParamObj);
+                let res = FetchUtility(urlToFetch)
+                res
+                    .then(res =>
+                        // cases after loadmore is hit
+                        // 1. if currentPageNo is less than res.total_pages, append the res.results with the gridContents
+                        // 2. if currentPageNo is equal to res.total_pages, donot show the 
+
+                        (currentPageNo < res.total_pages) ?
+                            //    console.log("from loadmore instance", currentPageNo,res.total_pages,currentPageNo <= res.total_pages): null
+                            this.setState({
+                                // update the grids by adding the new contents to the grid
+                                gridContents: [...this.state.gridContents, ...res.results],
+                                isLoading: false,
+                            }, () => toggleHandleLoadMore())
+                            : this.setState({ isLoading: false, showLoadMore: false, alertNoMorePics: true }, () => toggleHandleLoadMore())
+                    )
+                    .catch(e => console.log(e));
+            })
 
 
         }
 
-        //case: when the user hits the loadmore button
-        else if (prevProps.loadMore === false && loadMore === true) {
-            //    without searching the user hits the load more button the random pic gets populated
-            if ((prevProps.searchValue === "random") && (searchValue === "random")) {
-                this.setState({
-                    isLoading: true,
-                    currentPageNo: this.state.currentPageNo + 1,
-                }, () => {
-                    let url = `https://api.unsplash.com/search/photos?page=${this.state.currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`;
 
-                    let res = FetchUtility(url);
-                    res
-                        .then(res => {
-                            if (currentPageNo < res.total_pages) {
-                                this.setState({
-                                    isLoading: false,
-                                    searchFound: false,
-                                    showLoadMore: true,
-                                    gridContents: [...this.state.gridContents, ...res.results],
-                                    isLoading: false
-                                });
-                                toggleHandleLoadMore();
-                            }
-                            // case: if no pages is found
-                            if (res.results.length === 0) {
-                                return this.setState({
-                                    isLoading: false,
-                                    searchFound: true,
-                                    showLoadMore: false
-
-                                });
-                            }
-                        })
-                        .catch(e => console.log(e));
-                });
-
-            }
-
-            else {
-                //when user enters a keyword, searches it and then hits the loadmore button
-                this.setState({
-                    isLoading: true,
-                    currentPageNo: this.state.currentPageNo + 1,
-
-                }, () => {
-                    let url = `https://api.unsplash.com/search/photos?page=${this.state.currentPageNo}&per_page=${limitPerPage}&query=${searchValue}&client_id=${accessKey}`;
-
-                    let res = FetchUtility(url);
-                    res
-                        .then(res => {
-                            console.log("========> re baba", res, (currentPageNo > res.total_pages));
-                            // if (this.state.currentPageNo > res.total_pages) {
-                            //     console.log("om om om")
-                            //     this.setState({
-                            //         alertNoMorePics: true,
-                            //         searchFound: false
-                            //     })
-                            // }
-                            if (currentPageNo < res.total_pages) {
-                                this.setState({
-                                    isLoading: false,
-                                    searchFound: false,
-                                    showLoadMore: true,
-                                    gridContents: [...this.state.gridContents, ...res.results],
-                                    isLoading: false
-                                });
-                                toggleHandleLoadMore();
-                            }
-                            // cases if no more pages is found
-                            if (res.results.length === 0) {
-                                return this.setState({
-                                    isLoading: false,
-                                    alertNoMorePics: true,
-                                    showLoadMore: false
-
-                                });
-                            }
-                        })
-                        .catch(e => console.log(e));
-                });
-
-            }
-
-
-
-        }
     }
 
 
+    gridUpdater = () => {
+
+    }
     render() {
-        const { gridContents, isLoading, searchFound, showLoadMore, alertNoMorePics } = this.state;
+        const { gridContents, isLoading, showLoadMore, alertNoMorePics } = this.state;
         console.log("from render of grid the state and props is", this.state, this.props)
+        // console.log("grid container rendered");
         const { handlePopUp, handleLoadMore } = this.props;
         return (
             <div className="gridContainer">
                 {
                     isLoading ?
-                        <img className="loader" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" /> :
+                        <img className="loader" src={loaderGifUrl} /> :
                         null
                 }
-                {(gridContents && !isLoading && !searchFound) ? gridContents.map((pic, index) => (
-                    <div
-                        key={index}
-                        className="gridItem"
-                        id={pic.id}
-                        style={{
-                            backgroundImage: `url("${pic.urls.small}")`,
-                        }}
-                        onClick={() => {
-                            handlePopUp(pic.id, pic.user);
-                        }}>
-                        <div className="profile-container">
-                            <div className="profile-pic" style={{ backgroundImage: `url(${pic.user.profile_image.small})` }}></div>
-                            <div className="profile-name-ctn">
-                                <span className="profile-name-by">Image by</span>
-                                <span className="profile-name">{pic.user.name}</span>
-                            </div>
 
-                        </div>
-                    </div>
+                { // if gridContents is full after searching and loading has stopped
+                    (gridContents && !isLoading) ? gridContents.map((pic, index) => (
+
+                        <Grid
+                            pic={pic}
+                            index={index}
+                            handlePopUp={handlePopUp}
+                            key={index}
+                        />
 
 
-                )) :
-                    null
+                    )) :
+                        null
                 }
-                {
-                    (searchFound && !isLoading) ?
+                <Alert
+                    styleName="no-search"
+                    gridContents={gridContents}
+                    isLoading={isLoading}
+                    alertNoMorePics={alertNoMorePics}
+                />
+                {/* {// if gridContents is null and loading is done show no search found 
+                    //this and bottom className = no-search will b one component
+                    (!gridContents && !isLoading) ?
                         <div className="no-search">no search found</div>
                         : null
-                }
+                } */}
                 {
                     (showLoadMore && !isLoading) ?
                         <div className="btn-container"><button className="loadBtn" onClick={handleLoadMore}>Load More</button></div>
                         : null
                 }
-                {
+                {/* {
                     alertNoMorePics ? <div className="no-search">no more pics to show</div>
                         : null
-                }
+                } */}
 
             </div>
         );
@@ -240,17 +178,4 @@ class Grid extends Component {
 
 }
 
-export default Grid;
-
-
-
-
-// currentPageNo <= res.total_pages)?
-//                         this.setState({
-//                             // update the grids by adding the new contents to the grid
-//                             gridContents: [ ...this.state.gridContents,...res.results],
-//                             isLoading: false,
-//                          },() => toggleHandleLoadMore()): 
-//                           this.setState(
-//                               {isLoading: false, showLoadMore: false, alertNoMorePics: true},() => toggleHandleLoadMore())
-                    
+export default GridContainer;

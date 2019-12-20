@@ -11,23 +11,15 @@ class Main extends React.Component {
         this.state = {
             accessKey: "5ee7b68a9600ef9aaf4f3d1773c4f86a729d91f3c87bb43bcfb0cfe2a341604a",
             searchContent: null,
-            currentPageNo: 1,
             showLoadMore: true,
             showPopup: false,
             popUpPicId: null,
             dataOfPopUpPics: null,
             searchPlaceHolder: "Search for images here ",
             searchValue: "random",
-            loadMore: false,
-            limitPerPage: '9-per-page',
-            isSearch: true,
+            // loadMore: false,
+            // isSearch: true,
         };
-    }
-
-    componentDidMount() {
-        this.setState({
-            currentPageNo: 1,
-        })
     }
     onChange = (e) => {
         this.setState({
@@ -36,35 +28,48 @@ class Main extends React.Component {
     }
 
     handleEnterKey = async (e) => {
-        // console.log("handle enter key called")
+        console.log("handle enter key called")
         const { searchPlaceHolder } = this.state;
         e.key === "Enter" ? this.setState({
             searchValue: searchPlaceHolder,
-            isSearch: true
+            
         }) : null
 
     }
-
-    handleLoadMore = () => {
-        this.setState({
-            loadMore: true
-        })
-
+    
+    handleInputClick = e => {
+        const { searchPlaceHolder } = this.state
+        if (searchPlaceHolder === "Search for images here " && e.type === "click") {
+            this.setState({
+                searchPlaceHolder: ""
+            })
+        }
     }
 
-    toggleHandleLoadMore = () => {
-        // console.log("toggleHandleloadmore is called re baba")
-        this.setState({
-            loadMore: false
-        });
-    }
-
-    handleClick = e => {
+    handleSearchIconClick = e => {
         const { searchPlaceHolder } = this.state
         this.setState({
-            searchValue: searchPlaceHolder
+            searchValue: searchPlaceHolder,
         })
     }
+
+
+
+    // handleLoadMore = () => {
+    //     this.setState({
+    //         loadMore: true
+    //     })
+
+    // }
+
+    // toggleHandleLoadMore = () => {
+    //     // console.log("toggleHandleloadmore is called re baba")
+    //     this.setState({
+    //         loadMore: false
+    //     });
+    // }
+
+    
 
     togglePopup = async () => {
         this.setState({
@@ -75,6 +80,7 @@ class Main extends React.Component {
 
     handlePopUp = async (picId, picUser) => {
         const { accessKey, } = this.state;
+        // bring client id from constants file
         const jsonData = await fetch(`https://api.unsplash.com/photos/${picId}?client_id=${accessKey}`);
         const data = await jsonData.json();
         this.setState({
@@ -87,18 +93,10 @@ class Main extends React.Component {
         this.setState({
             searchPlaceHolder: searchValue,
             searchValue: searchValue,
-            isSearch: true
         })
     }
 
-    handleInputClick = e => {
-        const { searchPlaceHolder } = this.state
-        if (searchPlaceHolder === "Search for images here " && e.type === "click") {
-            this.setState({
-                searchPlaceHolder: " "
-            })
-        }
-    }
+    
 
 
 
@@ -107,8 +105,8 @@ class Main extends React.Component {
 
     render() {
         const { loadMore, searchPlaceHolder, showLoadMore, showPopup, popUpPicId, accessKey, dataOfPopUpPics, searchValue, limitPerPage, isSearch } = this.state;
-        console.log("from the render of main the state is", this.state)
-        const { handleClick, onChange, handleEnterKey, handlePopUp, togglePopup, handleLoadMore, handleHeaderSearchTagClick, handleInputClick, toggleHandleLoadMore } = this;
+        // console.log("from the render of main the state is", this.state)
+        const { handleSearchIconClick, onChange, handleEnterKey, handlePopUp, togglePopup, handleLoadMore, handleHeaderSearchTagClick, handleInputClick, toggleHandleLoadMore } = this;
 
         return (
             <div className="content">
@@ -120,18 +118,16 @@ class Main extends React.Component {
                         onChange={onChange}
                         handleEnterKey={handleEnterKey}
                         value={searchPlaceHolder}
-                        handleClick={handleClick}
                         placeholder={searchPlaceHolder}
+                        handleSearchIconClick={handleSearchIconClick}
                         handleInputClick={handleInputClick}
                     />
                     <GridContainer
                         handlePopUp={handlePopUp}
                         searchValue={searchValue}
-                        loadMore={loadMore}
-                        toggleHandleLoadMore={toggleHandleLoadMore}
-                        limitPerPage={limitPerPage}
-                        toggleHandleLoadMore={toggleHandleLoadMore}
-                        handleLoadMore={handleLoadMore}
+                        // loadMore={loadMore}
+                        // toggleHandleLoadMore={toggleHandleLoadMore}
+                        // handleLoadMore={handleLoadMore}
                         isSearch={isSearch}
 
                     />
@@ -162,3 +158,4 @@ class Main extends React.Component {
 }
 
 export default Main;
+

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import pic from "./icons8-search-50 (1).png";
 
-const SearchBar = ({ onChange, handleEnterKey, value, handleClick, placeHolder,handleInputClick }) => {
+const SearchBar = ({ onChange, handleEnterKey, value, handleSearchIconClick, placeHolder,handleInputClick }) => {
     // console.log("SearchBar rendered");
     return (
        
@@ -20,7 +20,7 @@ const SearchBar = ({ onChange, handleEnterKey, value, handleClick, placeHolder,h
                style={{
                    backgroundImage: `url(${pic})`
                 }} 
-                onClick={handleClick}
+                onClick={handleSearchIconClick}
 
                >
             </div> 

@@ -48,42 +48,44 @@ class GridContainer extends Component {
     }
 
 
+
     gridUpdater = (searchValue, currentPageNo) => {
-        const { limitPerPage, gridContents } = this.state;
+        let { limitPerPage, gridContents, isLoading, alertNoMorePics } = this.state;
         let urlParamObj = { currentPageNo, limitPerPage, searchValue, client_id }
         let urlToFetch = urlConstructor(urlParamObj);
-        let res = FetchUtility(urlToFetch)
+        let res = FetchUtility(urlToFetch);
+        let finalGridContents;
+        let finalAlertNoMorePics;
         res.then(res => {
+            // compute what the state variables will be before hand and when at last do a setstate with all those variables
             if (currentPageNo < res.total_pages) {
-                // case: when load more is clicked
-                this.setState({
-                    gridContents: gridContents ? [...this.state.gridContents, ...res.results] : res.results,
-                    isLoading: false,
-                    alertNoMorePics: false
-                });
+                finalGridContents = gridContents ? [...this.state.gridContents, ...res.results] : res.results;
+                finalAlertNoMorePics = false;
             }
-            // if loadmore was clicked and no more resukts left to show
+            // if loadmore was clicked and no more results left to show
             else if (currentPageNo >= res.total_pages) {
-                this.setState({
-                    alertNoMorePics: true
-                })
+                finalGridContents = gridContents ;
+                finalAlertNoMorePics = true
             }
             // if entered keyword isnt found
             if (!res.results.length) {
-                this.setState({
-                    gridContents: null,
-                    isLoading: false,
-                    alertNoMorePics: true,
-                })
+                finalGridContents = null;
+                finalAlertNoMorePics = true;
             }
+            this.setState({
+                gridContents: finalGridContents,
+                isLoading: false,
+                alertNoMorePics: finalAlertNoMorePics,
+            })
 
         })
             .catch(e => console.log(e));
-        
+
 
     }
 
     render() {
+        console.log("from the GridCONTAINER THE STATE IS", this.state)
         const { gridContents, isLoading, showLoadMore, alertNoMorePics } = this.state;
         const { handlePopUp } = this.props;
         return (
